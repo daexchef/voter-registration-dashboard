@@ -3,8 +3,8 @@
     "title": "Eligible (VEP 2024) vs. Registered (2026 Estimates) by State",
     "asOf": "2026-08",
     "generatedFrom": "grok_report.pdf",
-    "data_revision": 6,
-    "last_pipeline_run": "2026-08-12T21:52:16+00:00",
+    "data_revision": 7,
+    "last_pipeline_run": "2026-08-12T22:22:15+00:00",
     "last_pipeline_trigger": "schedule",
     "sources": {
       "vep": {
@@ -18,7 +18,7 @@
         "description": "Independent Voter Project (IVP) 2026 estimates compiled from state election offices, party data, and projections (published via World Population Review). Align closely with recent official reports (e.g., California ~23.1–23.2 million).",
         "url": "https://worldpopulationreview.com/",
         "note": "National totals from other compilations (e.g., USAFacts ~204.6 million as of April 2026) are lower, reflecting differences in active-only counts, timing, or incomplete state reporting.",
-        "last_scraped": "2026-08-12T21:52:14+00:00",
+        "last_scraped": "2026-08-12T22:22:14+00:00",
         "scrape_url": "https://worldpopulationreview.com/state-rankings/registered-voters-by-state",
         "scrape_total": 216693315
       },
@@ -26,7 +26,7 @@
         "name": "USAFacts April 2026 compilation",
         "description": "Alternate national registered total ~204.6 million (active-oriented).",
         "url": "https://usafacts.org/",
-        "last_scraped": "2026-08-12T21:52:15+00:00",
+        "last_scraped": "2026-08-12T22:22:15+00:00",
         "scraped_millions": 204.6
       },
       "stateSos": {
