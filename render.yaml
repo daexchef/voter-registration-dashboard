@@ -1,0 +1,16 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+# Connect this repo and apply the blueprint for a public HTTPS URL.
+services:
+  - type: web
+    name: voter-registration-dashboard
+    runtime: python
+    plan: free
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PIPELINE_INTERVAL_MINUTES
+        value: "30"
+      - key: PIPELINE_RUN_ON_STARTUP
+        value: "1"
+      - key: PYTHON_VERSION
+        value: "3.11.9"

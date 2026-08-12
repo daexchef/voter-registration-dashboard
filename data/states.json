@@ -1,0 +1,455 @@
+{
+  "meta": {
+    "title": "Eligible (VEP 2024) vs. Registered (2026 Estimates) by State",
+    "asOf": "2026-08",
+    "generatedFrom": "grok_report.pdf",
+    "data_revision": 2,
+    "last_pipeline_run": "2026-08-12T19:51:20+00:00",
+    "last_pipeline_trigger": "startup",
+    "sources": {
+      "vep": {
+        "name": "Voting-Eligible Population (VEP) 2024",
+        "description": "2024 estimates primarily aligned with Michael McDonald's United States Elections Project methodology and Census citizen voting-age data adjusted for ineligibility. U.S. citizens age 18+ who are not legally barred from voting.",
+        "url": "http://www.electproject.org/",
+        "note": "These remain the most consistent comprehensive state-level eligible-voter numbers available; newer 2025 Census civilian population estimates exist but full VEP recalculations by state are not uniformly published yet."
+      },
+      "registered": {
+        "name": "Registered Voters 2026 (IVP estimates)",
+        "description": "Independent Voter Project (IVP) 2026 estimates compiled from state election offices, party data, and projections (published via World Population Review). Align closely with recent official reports (e.g., California ~23.1–23.2 million).",
+        "url": "https://worldpopulationreview.com/",
+        "note": "National totals from other compilations (e.g., USAFacts ~204.6 million as of April 2026) are lower, reflecting differences in active-only counts, timing, or incomplete state reporting.",
+        "last_scraped": "2026-08-12T19:51:19+00:00",
+        "scrape_url": "https://worldpopulationreview.com/state-rankings/registered-voters-by-state",
+        "scrape_total": 216693315
+      },
+      "usafacts": {
+        "name": "USAFacts April 2026 compilation",
+        "description": "Alternate national registered total ~204.6 million (active-oriented).",
+        "url": "https://usafacts.org/",
+        "last_scraped": "2026-08-12T19:51:20+00:00",
+        "scraped_millions": 204.6
+      },
+      "stateSos": {
+        "name": "State Secretaries of State / Elections Divisions",
+        "description": "Authoritative day-to-day rolls; recommended for the absolute latest figure on any single state.",
+        "url": "https://www.usa.gov/state-election-office"
+      }
+    },
+    "caveats": [
+      "Timing mismatch: VEP is anchored to 2024; registration numbers reflect 2025–mid-2026 rolls. Population growth, new registrations, and list cleaning cause some divergence.",
+      "Rates above ~90–100% occur in states with slower list maintenance or high mobility (inactive voters still on rolls).",
+      "North Dakota has no voter registration system; the listed registered figure is an estimate/placeholder and not directly comparable.",
+      "Registration rate = Registered ÷ VEP. Mid-2026 data is incomplete or estimated in places because states update rolls on different schedules.",
+      "No single official, fully contemporaneous national snapshot exists as of August 2026."
+    ],
+    "national": {
+      "vepApproxMillions": 240.7,
+      "registeredIvpApproxMillions": 216.7,
+      "registeredUsafactsApproxMillions": 204.6,
+      "overallRateRange": "85–90%"
+    }
+  },
+  "states": [
+    {
+      "state": "Alabama",
+      "abbr": "AL",
+      "vep2024": 3867406,
+      "registered2026": 3538755,
+      "rate": 0.915,
+      "notes": null
+    },
+    {
+      "state": "Alaska",
+      "abbr": "AK",
+      "vep2024": 536581,
+      "registered2026": 574310,
+      "rate": 1.07,
+      "notes": "Rate >100% often reflects inactive voters still on rolls."
+    },
+    {
+      "state": "Arizona",
+      "abbr": "AZ",
+      "vep2024": 5366526,
+      "registered2026": 4417117,
+      "rate": 0.823,
+      "notes": null
+    },
+    {
+      "state": "Arkansas",
+      "abbr": "AR",
+      "vep2024": 2201764,
+      "registered2026": 1650582,
+      "rate": 0.75,
+      "notes": "Lower-rate state; stricter rules / list maintenance / demographics."
+    },
+    {
+      "state": "California",
+      "abbr": "CA",
+      "vep2024": 25922868,
+      "registered2026": 23222034,
+      "rate": 0.896,
+      "notes": "IVP figure aligns with official ~23.1–23.2 million reports."
+    },
+    {
+      "state": "Colorado",
+      "abbr": "CO",
+      "vep2024": 4415631,
+      "registered2026": 3996931,
+      "rate": 0.905,
+      "notes": null
+    },
+    {
+      "state": "Connecticut",
+      "abbr": "CT",
+      "vep2024": 2670153,
+      "registered2026": 2358527,
+      "rate": 0.883,
+      "notes": null
+    },
+    {
+      "state": "Delaware",
+      "abbr": "DE",
+      "vep2024": 776224,
+      "registered2026": 767325,
+      "rate": 0.989,
+      "notes": null
+    },
+    {
+      "state": "Florida",
+      "abbr": "FL",
+      "vep2024": 16327632,
+      "registered2026": 14944316,
+      "rate": 0.915,
+      "notes": null
+    },
+    {
+      "state": "Georgia",
+      "abbr": "GA",
+      "vep2024": 7793977,
+      "registered2026": 7540601,
+      "rate": 0.967,
+      "notes": null
+    },
+    {
+      "state": "Hawaii",
+      "abbr": "HI",
+      "vep2024": 1038968,
+      "registered2026": 786769,
+      "rate": 0.757,
+      "notes": "Lower-rate state."
+    },
+    {
+      "state": "Idaho",
+      "abbr": "ID",
+      "vep2024": 1429619,
+      "registered2026": 973660,
+      "rate": 0.681,
+      "notes": "Lowest registration rate in this compilation."
+    },
+    {
+      "state": "Illinois",
+      "abbr": "IL",
+      "vep2024": 8982526,
+      "registered2026": 8399862,
+      "rate": 0.935,
+      "notes": null
+    },
+    {
+      "state": "Indiana",
+      "abbr": "IN",
+      "vep2024": 5041013,
+      "registered2026": 4395550,
+      "rate": 0.872,
+      "notes": null
+    },
+    {
+      "state": "Iowa",
+      "abbr": "IA",
+      "vep2024": 2359332,
+      "registered2026": 2041855,
+      "rate": 0.865,
+      "notes": null
+    },
+    {
+      "state": "Kansas",
+      "abbr": "KS",
+      "vep2024": 2122704,
+      "registered2026": 1862727,
+      "rate": 0.878,
+      "notes": null
+    },
+    {
+      "state": "Kentucky",
+      "abbr": "KY",
+      "vep2024": 3327188,
+      "registered2026": 3079844,
+      "rate": 0.926,
+      "notes": null
+    },
+    {
+      "state": "Louisiana",
+      "abbr": "LA",
+      "vep2024": 3305398,
+      "registered2026": 2874643,
+      "rate": 0.87,
+      "notes": null
+    },
+    {
+      "state": "Maine",
+      "abbr": "ME",
+      "vep2024": 1130059,
+      "registered2026": 965085,
+      "rate": 0.854,
+      "notes": null
+    },
+    {
+      "state": "Maryland",
+      "abbr": "MD",
+      "vep2024": 4411216,
+      "registered2026": 4312855,
+      "rate": 0.978,
+      "notes": "High-rate state; strong motor-voter / registration systems."
+    },
+    {
+      "state": "Massachusetts",
+      "abbr": "MA",
+      "vep2024": 5132767,
+      "registered2026": 4911924,
+      "rate": 0.957,
+      "notes": null
+    },
+    {
+      "state": "Michigan",
+      "abbr": "MI",
+      "vep2024": 7624237,
+      "registered2026": 7922224,
+      "rate": 1.039,
+      "notes": "Rate >100%; inactive voters / list maintenance lag."
+    },
+    {
+      "state": "Minnesota",
+      "abbr": "MN",
+      "vep2024": 4277436,
+      "registered2026": 3605412,
+      "rate": 0.843,
+      "notes": null
+    },
+    {
+      "state": "Mississippi",
+      "abbr": "MS",
+      "vep2024": 2164463,
+      "registered2026": 1953300,
+      "rate": 0.902,
+      "notes": null
+    },
+    {
+      "state": "Missouri",
+      "abbr": "MO",
+      "vep2024": 4642204,
+      "registered2026": 4121740,
+      "rate": 0.888,
+      "notes": null
+    },
+    {
+      "state": "Montana",
+      "abbr": "MT",
+      "vep2024": 896053,
+      "registered2026": 724916,
+      "rate": 0.809,
+      "notes": null
+    },
+    {
+      "state": "Nebraska",
+      "abbr": "NE",
+      "vep2024": 1406843,
+      "registered2026": 1218041,
+      "rate": 0.866,
+      "notes": null
+    },
+    {
+      "state": "Nevada",
+      "abbr": "NV",
+      "vep2024": 2249102,
+      "registered2026": 2255284,
+      "rate": 1.003,
+      "notes": "Rate ≈100%."
+    },
+    {
+      "state": "New Hampshire",
+      "abbr": "NH",
+      "vep2024": 1127497,
+      "registered2026": 1090612,
+      "rate": 0.967,
+      "notes": null
+    },
+    {
+      "state": "New Jersey",
+      "abbr": "NJ",
+      "vep2024": 6401643,
+      "registered2026": 6254212,
+      "rate": 0.977,
+      "notes": null
+    },
+    {
+      "state": "New Mexico",
+      "abbr": "NM",
+      "vep2024": 1554606,
+      "registered2026": 1316654,
+      "rate": 0.847,
+      "notes": null
+    },
+    {
+      "state": "New York",
+      "abbr": "NY",
+      "vep2024": 13853326,
+      "registered2026": 12498691,
+      "rate": 0.902,
+      "notes": null
+    },
+    {
+      "state": "North Carolina",
+      "abbr": "NC",
+      "vep2024": 8102246,
+      "registered2026": 7242160,
+      "rate": 0.894,
+      "notes": null
+    },
+    {
+      "state": "North Dakota",
+      "abbr": "ND",
+      "vep2024": 582216,
+      "registered2026": 465118,
+      "rate": null,
+      "notes": "No voter registration system. Registered figure is an estimate/placeholder and not directly comparable. Rate treated as N/A.",
+      "noRegistration": true
+    },
+    {
+      "state": "Ohio",
+      "abbr": "OH",
+      "vep2024": 8947502,
+      "registered2026": 7580955,
+      "rate": 0.847,
+      "notes": null
+    },
+    {
+      "state": "Oklahoma",
+      "abbr": "OK",
+      "vep2024": 2945902,
+      "registered2026": 2248696,
+      "rate": 0.763,
+      "notes": "Lower-rate state."
+    },
+    {
+      "state": "Oregon",
+      "abbr": "OR",
+      "vep2024": 3211515,
+      "registered2026": 3430521,
+      "rate": 1.068,
+      "notes": "Automatic voter registration (AVR); rate >100% common with inactive voters."
+    },
+    {
+      "state": "Pennsylvania",
+      "abbr": "PA",
+      "vep2024": 9903829,
+      "registered2026": 8564402,
+      "rate": 0.865,
+      "notes": null
+    },
+    {
+      "state": "Rhode Island",
+      "abbr": "RI",
+      "vep2024": 826559,
+      "registered2026": 757856,
+      "rate": 0.917,
+      "notes": null
+    },
+    {
+      "state": "South Carolina",
+      "abbr": "SC",
+      "vep2024": 4121955,
+      "registered2026": 3520104,
+      "rate": 0.854,
+      "notes": null
+    },
+    {
+      "state": "South Dakota",
+      "abbr": "SD",
+      "vep2024": 676581,
+      "registered2026": 601756,
+      "rate": 0.889,
+      "notes": null
+    },
+    {
+      "state": "Tennessee",
+      "abbr": "TN",
+      "vep2024": 5317723,
+      "registered2026": 4343951,
+      "rate": 0.817,
+      "notes": null
+    },
+    {
+      "state": "Texas",
+      "abbr": "TX",
+      "vep2024": 20059077,
+      "registered2026": 17578640,
+      "rate": 0.876,
+      "notes": null
+    },
+    {
+      "state": "Utah",
+      "abbr": "UT",
+      "vep2024": 2357958,
+      "registered2026": 1658976,
+      "rate": 0.704,
+      "notes": "Lower-rate state; younger population."
+    },
+    {
+      "state": "Vermont",
+      "abbr": "VT",
+      "vep2024": 527067,
+      "registered2026": 466163,
+      "rate": 0.884,
+      "notes": null
+    },
+    {
+      "state": "Virginia",
+      "abbr": "VA",
+      "vep2024": 6350428,
+      "registered2026": 5966794,
+      "rate": 0.94,
+      "notes": null
+    },
+    {
+      "state": "Washington",
+      "abbr": "WA",
+      "vep2024": 5640909,
+      "registered2026": 5253687,
+      "rate": 0.931,
+      "notes": null
+    },
+    {
+      "state": "West Virginia",
+      "abbr": "WV",
+      "vep2024": 1387010,
+      "registered2026": 1115461,
+      "rate": 0.804,
+      "notes": null
+    },
+    {
+      "state": "Wisconsin",
+      "abbr": "WI",
+      "vep2024": 4483698,
+      "registered2026": 4980726,
+      "rate": 1.111,
+      "notes": "Highest rate in this compilation; inactive voters / list lag."
+    },
+    {
+      "state": "Wyoming",
+      "abbr": "WY",
+      "vep2024": 442780,
+      "registered2026": 340991,
+      "rate": 0.77,
+      "notes": null
+    }
+  ]
+}
