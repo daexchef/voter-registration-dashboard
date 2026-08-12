@@ -2,7 +2,7 @@
 # Connect this repo and apply the blueprint for a public HTTPS URL.
 services:
   - type: web
-    name: voter-registration-dashboard
+    name: vep-dashboard
     runtime: python
     plan: free
     buildCommand: pip install -r backend/requirements.txt
