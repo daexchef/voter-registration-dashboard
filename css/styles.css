@@ -90,6 +90,25 @@ a:hover {
   text-align: right;
 }
 
+.repo-link {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-family: var(--mono);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+  max-width: 22rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.repo-link:hover {
+  color: var(--vep);
+  border-bottom-color: var(--vep);
+  text-decoration: none;
+}
+
 .live-badge {
   display: inline-flex;
   align-items: center;
