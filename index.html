@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Eligible (VEP 2024) vs Registered (2026) — Live Dashboard</title>
+  <meta name="description" content="Live dashboard: VEP 2024 vs registered voters 2026 by state — US map, national aggregates, scrape/API pipeline auto-refresh, and source drill-down." />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div>
+        <h1>Eligible (VEP 2024) vs. Registered (2026 Estimates) by State</h1>
+        <p class="subtitle">
+          Live national aggregates, interactive US map, and charting with drill-down to source methodology.
+          Registered counts auto-refresh from the scrape/API pipeline (World Population Review / IVP); VEP remains anchored to the 2024 report snapshot.
+        </p>
+      </div>
+      <div class="header-meta">
+        <span class="live-badge" id="pipeline-status" title="Scrape pipeline status"><span class="dot"></span> Connecting…</span>
+        <div class="pipeline-detail" id="pipeline-detail">—</div>
+        <div class="clock" id="clock">—</div>
+        <button type="button" class="primary" id="btn-pipeline-refresh" style="margin-top:0.25rem">Run pipeline now</button>
+      </div>
+    </header>
+
+    <section class="kpi-grid" aria-label="National aggregates">
+      <article class="kpi vep">
+        <div class="label">Total Eligible (VEP)</div>
+        <div class="value" id="kpi-vep">—</div>
+        <div class="hint">Sum of state VEP 2024 (filtered view)</div>
+      </article>
+      <article class="kpi reg">
+        <div class="label">Total Registered</div>
+        <div class="value" id="kpi-reg">—</div>
+        <div class="hint">2026 IVP estimates (pipeline-refreshed)</div>
+      </article>
+      <article class="kpi rate">
+        <div class="label">Overall Reg. Rate</div>
+        <div class="value" id="kpi-rate">—</div>
+        <div class="hint">Registered ÷ VEP on current filter</div>
+      </article>
+      <article class="kpi warn">
+        <div class="label">Eligible − Registered</div>
+        <div class="value" id="kpi-gap">—</div>
+        <div class="hint">Approx. gap on rolls vs eligibility</div>
+      </article>
+      <article class="kpi">
+        <div class="label">States &gt; 100% Rate</div>
+        <div class="value" id="kpi-over">—</div>
+        <div class="hint">Often inactive voters still on rolls</div>
+      </article>
+      <article class="kpi">
+        <div class="label">States in View</div>
+        <div class="value" id="kpi-states">—</div>
+        <div class="hint">After search / rate filters</div>
+      </article>
+    </section>
+
+    <div class="toolbar" role="search">
+      <label>
+        Search state
+        <input type="search" id="search" placeholder="e.g. Texas or TX" autocomplete="off" />
+      </label>
+      <label>
+        Rate band
+        <select id="filter-rate">
+          <option value="all">All rates</option>
+          <option value="over100">&gt; 100%</option>
+          <option value="high">95–100%</option>
+          <option value="mid">85–95%</option>
+          <option value="low">&lt; 85%</option>
+          <option value="na">N/A (ND)</option>
+        </select>
+      </label>
+      <label>
+        Sort by
+        <select id="sort-select">
+          <option value="state">State name</option>
+          <option value="vep2024">Eligible (VEP)</option>
+          <option value="registered2026">Registered</option>
+          <option value="rate">Registration rate</option>
+          <option value="gap">Gap (VEP − Reg)</option>
+        </select>
+      </label>
+      <div class="btn-group">
+        <button type="button" data-chart-mode="both" class="active">Eligible vs Registered</button>
+        <button type="button" data-chart-mode="rate">Rate only</button>
+        <button type="button" data-chart-mode="gap">Gap only</button>
+        <button type="button" id="btn-export">Export CSV</button>
+        <button type="button" id="btn-reset">Reset</button>
+      </div>
+    </div>
+
+    <!-- Live map + national totals -->
+    <div class="map-row">
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Live US map</h2>
+          <span class="meta" id="map-meta">Registration rate %</span>
+        </div>
+        <div class="panel-body">
+          <div class="btn-group" style="margin-bottom:0.75rem">
+            <button type="button" data-map-metric="rate" class="active">Rate</button>
+            <button type="button" data-map-metric="vep">Eligible</button>
+            <button type="button" data-map-metric="registered">Registered</button>
+            <button type="button" data-map-metric="gap">Gap</button>
+          </div>
+          <div id="map" role="img" aria-label="Choropleth map of U.S. states by selected metric"></div>
+          <div class="map-legend" id="map-legend"></div>
+          <p class="meta" style="margin:0.65rem 0 0;color:var(--text-dim);font-size:0.8rem">
+            Click a state for source drill-down. Colors respect the table filter (dimmed states are filtered out).
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>National totals (all 50 states)</h2>
+          <span class="meta">Report + live IVP</span>
+        </div>
+        <div class="panel-body">
+          <div class="chart-wrap" style="height:220px">
+            <canvas id="national-chart" aria-label="National VEP vs registered totals"></canvas>
+          </div>
+          <p style="margin:0.75rem 0 0;color:var(--text-muted);font-size:0.85rem">
+            VEP ≈ <strong>240.7M</strong> (2024 snapshot) · Registered (IVP) pipeline target ≈ <strong>217.2M</strong> ·
+            USAFacts alternate national ≈ <strong>204.6M</strong>. Overall rate roughly <strong>85–90%</strong> depending on registered total.
+          </p>
+          <div class="caveats" style="margin-top:0.85rem">
+            <strong>Pipeline</strong>
+            <ul>
+              <li><strong>Registered:</strong> scraped from World Population Review (IVP 2026 estimates) every 15 min</li>
+              <li><strong>USAFacts:</strong> national figure scraped from their voter registration article</li>
+              <li><strong>VEP:</strong> Elect Project probed; state VEP kept from report until a stable feed is available</li>
+              <li>UI polls <code>/api/states</code> every 20s and updates when <code>data_revision</code> changes</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="main-grid">
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Eligible vs Registered by State</h2>
+          <span class="meta" id="chart-meta">Loading…</span>
+        </div>
+        <div class="panel-body">
+          <div class="legend" style="margin-bottom:0.75rem">
+            <span><i class="swatch vep"></i> Eligible (VEP 2024)</span>
+            <span><i class="swatch reg"></i> Registered (2026 est.)</span>
+            <span><i class="swatch rate"></i> Registration rate % (right axis)</span>
+          </div>
+          <div class="chart-wrap tall">
+            <canvas id="main-chart" aria-label="Bar chart of eligible vs registered voters by state"></canvas>
+          </div>
+          <p class="meta" style="margin:0.75rem 0 0;color:var(--text-dim);font-size:0.8rem">
+            Click any bar to open source drill-down for that state.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>State data table</h2>
+          <span class="meta" id="table-meta">—</span>
+        </div>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr>
+                <th data-sort="state">State</th>
+                <th data-sort="vep2024">Eligible</th>
+                <th data-sort="registered2026">Registered</th>
+                <th data-sort="gap">Gap</th>
+                <th data-sort="rate">Rate</th>
+              </tr>
+            </thead>
+            <tbody id="table-body">
+              <tr><td colspan="5" class="empty">Loading state data…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel detail" id="detail-panel" aria-live="polite">
+      <div class="panel-header">
+        <h2 id="detail-title">State detail</h2>
+        <button type="button" id="btn-close-detail">Close</button>
+      </div>
+      <div class="panel-body" id="detail-body"></div>
+    </section>
+
+    <section class="panel footer-panel">
+      <div class="panel-header">
+        <h2>Key data sources &amp; caveats (August 2026)</h2>
+        <span class="meta">API · scrape pipeline · grok_report.pdf seed</span>
+      </div>
+      <div class="panel-body">
+        <p>
+          <strong>Eligible voters</strong> are best measured by the Voting-Eligible Population (VEP): U.S. citizens age 18+ who are not legally barred from voting.
+          <strong>Registered voters</strong> appear on state rolls (active + inactive in most counts). North Dakota has no registration system.
+        </p>
+        <ul>
+          <li><strong>VEP:</strong> 2024 Elect Project–aligned snapshot in <code>data/states.json</code>.
+            <a href="http://www.electproject.org/" target="_blank" rel="noopener">electproject.org</a></li>
+          <li><strong>Registered (live):</strong> IVP 2026 estimates scraped from
+            <a href="https://worldpopulationreview.com/state-rankings/registered-voters-by-state" target="_blank" rel="noopener">World Population Review</a>
+            via <code>POST /api/refresh</code> and the 15-minute scheduler.</li>
+          <li><strong>USAFacts:</strong> alternate national total from their registration article
+            (<a href="https://usafacts.org/articles/how-many-voters-have-a-party-affiliation/" target="_blank" rel="noopener">usafacts.org</a>).</li>
+          <li><strong>API:</strong> <code>GET /api/states</code> · <code>GET /api/status</code> · <code>POST /api/refresh</code> · <code>GET /api/geo/us-states</code></li>
+          <li><strong>Operational truth:</strong>
+            <a href="https://www.usa.gov/state-election-office" target="_blank" rel="noopener">state SOS / elections offices</a> — rolls change daily.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+</body>
+</html>
